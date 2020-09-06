@@ -1,3 +1,3 @@
 export default {
-  isAuthenticated: (state) => state.accessToken !== null
+  isAuthenticated() { return localStorage.getItem('access-token') !== null }
 }

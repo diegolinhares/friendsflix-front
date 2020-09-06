@@ -32,7 +32,7 @@ export default {
     ...mapActions('users', ['login']),
     loginUser() {
       this.login(this.user)
-          .then(() => this.$router.push('/protected'))
+          .then(() => this.$router.push('/'))
     }
   },
 }
