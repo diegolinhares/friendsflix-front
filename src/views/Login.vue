@@ -1,12 +1,12 @@
 <template>
   <div>
-    <form @submit.prevent="login">
+    <form @submit.prevent="loginUser">
       <div>
-        <input type="email" v-model="email" name="email" id="email" placeholder="Email" />
+        <input type="email" v-model="user.email" name="email" id="email" placeholder="Email" />
       </div>
 
       <div>
-        <input type="password" v-model="password" name="password" id="password" placeholder="Senha" />
+        <input type="password" v-model="user.password" name="password" id="password" placeholder="Senha" />
       </div>
 
       <div>
@@ -17,27 +17,23 @@
 </template>
 
 <script>
-import { LOGIN_MUTATION } from '@/graphql/users/'
+import { mapActions } from 'vuex'
 
 export default {
   data() {
     return {
-      email: '',
-      password: '',
+      user: {
+        email: '',
+        password: '',
+      }
     }
   },
   methods: {
-    async login() {
-      let login = await this.$apollo.mutate({
-        mutation: LOGIN_MUTATION,
-        variables: {
-          email: this.email,
-          password: this.password,
-        },
-      })
-
-      console.log(login.data)
-    },
+    ...mapActions('users', ['login']),
+    loginUser() {
+      this.login(this.user)
+          .then(() => this.$router.push('/protected'))
+    }
   },
 }
 </script>
